@@ -219,7 +219,6 @@ CUDA_VISIBLE_DEVICES=0 python src/run_example.py \
       icd9code VARCHAR(100),
       FOREIGN KEY(patientunitstayid) REFERENCES patient(patientunitstayid)
   );
-  ...
   ```
 
   For Text-to-Cypher, provide entity and relation definitions in a JSON file (e.g., `schema.json`). 
@@ -239,7 +238,6 @@ CUDA_VISIBLE_DEVICES=0 python src/run_example.py \
           "flight_number": "str"
         }
       },
-      ...
     ],
     "relations": [
       {
@@ -248,7 +246,6 @@ CUDA_VISIBLE_DEVICES=0 python src/run_example.py \
         "obj_label": "Operator",
         "properties": {}
       },
-      ...
     ]
   }
   ```
