@@ -1,0 +1,18 @@
+{
+    "train_file_path": "./data/train/filler/sql/EHRSQL-ScienceBenchmark-BIRD-train-aug-postgres.json",
+    "dev_ehrsql_file_path": "./data/dev/filler/sql/EHRSQL-dev-postgres.json",
+    "dev_sb_file_path": "./data/dev/filler/sql/ScienceBenchmark-dev-postgres.json",
+    "dev_bird_file_path": "./data/dev/filler/sql/BIRD-dev-postgres.json",
+    "out_model_dir_path": "./models/filler/sql/postgres-config1",
+    "pretrained_model": "google/t5-v1_1-large",
+    "max_input_length": 512,
+    "max_output_length": 128,
+    "epochs": 8,
+    "batch_size": 16,
+    "learning_rate": 5e-5,
+    "weight_decay": 0.01,
+    "gradient_accumulation_steps": 2,
+    "seed": 42,
+    "train_amp_dtype": "fp32",
+    "eval_amp_dtype": "fp32"
+}

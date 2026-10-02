@@ -1,0 +1,22 @@
+{
+    "train_file_path": "./data/train/encoder/sql/EHRSQL-ScienceBenchmark-BIRD-train-aug.json",
+    "dev_ehrsql_file_path": "./data/dev/encoder/sql/EHRSQL-dev.json",
+    "dev_sb_file_path": "./data/dev/encoder/sql/ScienceBenchmark-dev.json",
+    "dev_bird_file_path": "./data/dev/encoder/sql/BIRD-dev.json",
+    "out_model_dir_path": "./models/encoder/structure/sql/config1",
+    "backbone": "./models/encoder/semantic/BAAI-bge-m3",
+    "max_nlq_length": 256,
+    "batch_size": 36,
+    "epochs": 5,
+    "samples_per_label": 3,
+    "num_explicit_negatives": 4,
+    "learning_rate": 1.5e-5,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.05,
+    "loss_temperature": 0.05,
+    "gradient_accumulation_steps": 1,
+    "group_loss_weight": 0.3,
+    "seed": 42,
+    "train_amp_dtype": "bf16",
+    "eval_amp_dtype": "fp32"
+}

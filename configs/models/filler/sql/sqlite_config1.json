@@ -1,0 +1,18 @@
+{
+    "train_file_path": "./data/train/filler/sql/EHRSQL-ScienceBenchmark-BIRD-train-aug-sqlite.json",
+    "dev_ehrsql_file_path": "./data/dev/filler/sql/EHRSQL-dev-sqlite.json",
+    "dev_sb_file_path": "./data/dev/filler/sql/ScienceBenchmark-dev-sqlite.json",
+    "dev_bird_file_path": "./data/dev/filler/sql/BIRD-dev-sqlite.json",
+    "out_model_dir_path": "./models/filler/sql/sqlite-config1",
+    "pretrained_model": "google/t5-v1_1-large",
+    "max_input_length": 512,
+    "max_output_length": 128,
+    "epochs": 12,
+    "batch_size": 16,
+    "learning_rate": 1e-4,
+    "weight_decay": 0.01,
+    "gradient_accumulation_steps": 4,
+    "seed": 42,
+    "train_amp_dtype": "fp32",
+    "eval_amp_dtype": "fp32"
+}

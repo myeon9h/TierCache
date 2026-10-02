@@ -1,0 +1,20 @@
+{
+    "train_file_path": "./data/train/encoder/cypher/CypherBench-train-aug.json",
+    "dev_file_path": "./data/dev/encoder/cypher/CypherBench-dev.json",
+    "out_model_dir_path": "./models/encoder/structure/cypher/config1",
+    "backbone": "./models/encoder/semantic/BAAI-bge-m3",
+    "max_nlq_length": 256,
+    "batch_size": 48,
+    "epochs": 12,
+    "samples_per_label": 2,
+    "num_explicit_negatives": 4,
+    "learning_rate": 2e-5,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.06,
+    "loss_temperature": 0.05,
+    "gradient_accumulation_steps": 1,
+    "group_loss_weight": 0.2,
+    "seed": 42,
+    "train_amp_dtype": "bf16",
+    "eval_amp_dtype": "fp32"
+}

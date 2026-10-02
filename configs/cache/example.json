@@ -1,0 +1,48 @@
+{
+  "cache_db_path": "./cache/test_cache.db",
+  "vector_db_host": "localhost",
+  "vector_db_port": "19530",
+
+  "t1": {
+    "cache_on": true,
+    "encoder_path": "./models/encoder/semantic/BAAI-bge-m3",
+    "max_nlq_length": 256,
+    "num_candidates": 1,
+    "similarity_threshold": 0.95,
+    "cache_size": 10000,
+    "eviction_policy": "LFU",
+    "vector_db": {
+      "collection_name": "test_t1_vector",
+      "vector_dim": 1024,
+      "metric_type": "COSINE",
+      "index_type": "FLAT"
+    }
+  },
+  
+  "t2": {
+    "cache_on": true,
+    "encoder_path": "./models/encoder/structure/BAAI-bge-m3-fine-tuned",
+    "filler_path": "./models/filler/T5-fine-tuned/sqlite",
+    "max_nlq_length": 256,
+    "max_sq_length": 256,
+    "max_sq_template_length": 256,
+    "num_candidates": 1,
+    "similarity_threshold": 0.95,
+    "cache_size": 10000,
+    "eviction_policy": "LFU",
+    "vector_db": {
+      "collection_name": "test_t2_vector",
+      "vector_dim": 1024,
+      "metric_type": "COSINE",
+      "index_type": "FLAT"
+    }
+  },
+
+  "text2sq_method": {
+    "method": "OmniSQL-vLLM",
+    "model_path": "seeklhy/OmniSQL-32B",
+    "dialect": "sqlite",
+    "max_model_length": 8192,
+    "vllm_memory_utilization": 0.9
+  }
+}

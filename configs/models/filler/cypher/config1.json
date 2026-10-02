@@ -1,0 +1,16 @@
+{
+    "train_file_path": "./data/train/filler/cypher/CypherBench-train-aug.json",
+    "dev_file_path": "./data/dev/filler/cypher/CypherBench-dev.json",
+    "out_model_dir_path": "./models/filler/cypher/config1",
+    "pretrained_model": "google/t5-v1_1-large",
+    "max_input_length": 512,
+    "max_output_length": 128,
+    "epochs": 12,
+    "batch_size": 16,
+    "learning_rate": 3e-5,
+    "weight_decay": 0.01,
+    "gradient_accumulation_steps": 4,
+    "seed": 42,
+    "train_amp_dtype": "fp32",
+    "eval_amp_dtype": "fp32"
+}
