@@ -12,10 +12,10 @@ class Neo4jExecutor(BaseCypherExecutor):
         self.db_url = db_url
         self._driver = GraphDatabase.driver(db_url, auth=("neo4j", "cypherbench"))
         
-    def execute(self, cypher: str) -> Union[List, None]:
+    def execute(self, sq: str) -> Union[List, None]:
         try:
             with self._driver.session() as session:
-                rows = session.run(cypher)
+                rows = session.run(sq)
                 cypher_result = self.rows_to_tuples([dict(row) for row in rows])
         except:
             cypher_result = None
@@ -56,4 +56,3 @@ class Neo4jExecutor(BaseCypherExecutor):
 
     def close(self):
         self._driver.close()
-    

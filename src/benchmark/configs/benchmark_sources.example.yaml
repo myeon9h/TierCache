@@ -1,0 +1,32 @@
+# Bundled benchmark question/query sources, separate from TierCache training data.
+# Paths resolve from the TierCache root, regardless of the current directory.
+# Keep only sources/DBs you intend to regenerate.
+EHRSQL:
+  root: src/benchmark/data/source/EHRSQL
+  schema_root: src/benchmark/data/source/EHRSQL
+  dbs: [eicu, mimic_iii]
+  splits:
+    Dev: valid
+
+ScienceBenchmark:
+  root: src/benchmark/data/source/ScienceBenchmark
+  schema_root: src/benchmark/data/source/ScienceBenchmark
+  dbs: [cordis, oncomx]
+  splits:
+    Dev: [dev]
+
+BIRD:
+  root: src/benchmark/data/source/BIRD
+  schema_root: src/benchmark/data/source/BIRD
+  dbs: [student_club, codebase_community]
+  splits:
+    Dev: dev.json
+  tables_json: tables.json
+
+CypherBench:
+  raw:
+    Test: src/benchmark/data/source/CypherBench/raw/test.json
+  # Use the preprocessed input from the original CypherStream pipeline.
+  preprocessed:
+    Test: src/benchmark/data/source/CypherBench/preprocessed/test.json
+  dbs: [company, flight_accident, movie, nba]

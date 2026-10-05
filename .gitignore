@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+/data/
+/models/
+/cache/
+*.tar.gz
+src/benchmark/configs/benchmark_sources.yaml
+src/benchmark/configs/db_config.yaml
+
+# Local release checklist and validation tests.
+/RELEASE_CHECKLIST.md
+/tests/test_sqstream.py

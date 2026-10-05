@@ -29,22 +29,58 @@ sudo docker compose -f vectordb/docker-compose.yml up -d
 
 ### Models
 
-Download the trained models for TierCache: [TBD](tbd). Then, extract the archive:
+<!-- HYUNJUN-REVIEW START: 2026-10-03 | Added Google Drive model download link. -->
+Download the trained models for TierCache: [models.tar.gz](https://drive.google.com/file/d/1jfJVeHEi5rye_C9sJ40SvQK7u9JlNwjk/view). Then, extract the archive:
 
 ```bash
 # Semantic encoder, Structure-aware encoder, Slot fillers
 tar -zxvf models.tar.gz
 ```
+<!-- HYUNJUN-REVIEW END: model download link -->
 To train your own models, see '4. Lightweight Model Training' below.
 
 ### Databases
 
-Download the databases: [TBD](tbd). Then, extract the archive:
+<!-- HYUNJUN-REVIEW START: 2026-10-03 | Modified database archive instructions; EHRSQL is excluded from the public archive. -->
+Download the database assets: [databases.tar.gz](https://drive.google.com/file/d/1QrcmzoE-tr27QGJ32Y2bK5RppTUnMx-L/view). Then, extract the archive from the repository root:
 
 ```bash
-# EHRSQL, ScienceBenchmark, BIRD, CypherBench
+# ScienceBenchmark, BIRD, CypherBench; EHRSQL is provided separately
 tar -zxvf databases.tar.gz
 ```
+
+The archive leaves `data/databases/EHRSQL/` empty. Prepare the EHRSQL databases separately as described below before running the EHRSQL examples or workloads.
+<!-- HYUNJUN-REVIEW END: database archive instructions -->
+
+<!-- HYUNJUN-REVIEW START: 2026-10-03 | Official EHRSQL DB download, placement and schema export instructions. -->
+#### SQLite for EHRSQL
+
+Follow the [official EHRSQL database instructions](https://github.com/glee4810/EHRSQL#database) to download the preprocessed `eicu.sqlite` and `mimic_iii.sqlite` files. Rename and place them at the following paths:
+
+```text
+data/databases/EHRSQL/eicu/db.sqlite
+data/databases/EHRSQL/mimic_iii/db.sqlite
+```
+
+For example, run the following from the repository root, setting `ehrsql_download_dir` to the directory containing the downloaded files:
+
+```bash
+# Create directories for the EHRSQL databases.
+mkdir -p ./data/databases/EHRSQL/eicu ./data/databases/EHRSQL/mimic_iii
+
+# Set the download directory and copy each database as db.sqlite.
+ehrsql_download_dir="/path/to/downloads"
+cp "$ehrsql_download_dir/eicu.sqlite" ./data/databases/EHRSQL/eicu/db.sqlite
+cp "$ehrsql_download_dir/mimic_iii.sqlite" ./data/databases/EHRSQL/mimic_iii/db.sqlite
+
+# Export schema descriptions from the downloaded databases.
+sqlite3 ./data/databases/EHRSQL/eicu/db.sqlite '.schema' \
+  > ./data/databases/EHRSQL/eicu/schema.txt
+sqlite3 ./data/databases/EHRSQL/mimic_iii/db.sqlite '.schema' \
+  > ./data/databases/EHRSQL/mimic_iii/schema.txt
+```
+
+<!-- HYUNJUN-REVIEW END: EHRSQL setup instructions -->
 
 #### PostgreSQL for ScienceBenchmark
 
@@ -100,7 +136,51 @@ pg_restore -F d \
 ```
 
 #### Neo4j for CypherBench
-TBD
+
+<!-- HYUNJUN-REVIEW START: 2026-10-03 | Official CypherBench graph deployment and TierCache connection settings. -->
+`databases.tar.gz` contains only the CypherBench schemas. Download and deploy the graphs using the [original CypherBench setup](https://github.com/megagonlabs/cypherbench#1-installation).
+
+Install [Docker](https://docs.docker.com/engine/install/) with the `docker-compose` command and [Git LFS](https://git-lfs.com/) first. CypherBench recommends at least 64 GB RAM for deploying all seven test graphs.
+
+```bash
+# Run from the TierCache root in a separate terminal.
+cd ..
+conda create -n cypherbench python=3.11
+conda activate cypherbench
+git clone https://github.com/megagonlabs/cypherbench.git
+cd cypherbench
+pip install -e .
+
+# Download graphs
+git lfs install
+git clone https://huggingface.co/datasets/megagonlabs/cypherbench benchmark
+
+# Deploy the seven test graphs.
+cd docker
+bash start_neo4j_test.sh
+cd ..
+
+# Initial loading typically takes at least 10 minutes.
+python scripts/print_db_status.py
+```
+
+Wait until the test graphs are ready, then run TierCache in the `tiercache` environment. The [default deployment](https://github.com/megagonlabs/cypherbench/blob/main/docker/docker-compose-test.yml) uses the following endpoints, with username `neo4j` and password `cypherbench`:
+
+| Workload | Graph | `--target_db_path` |
+| --- | --- | --- |
+| `COMPANY` | `company` | `bolt://localhost:15062` |
+| `ACCIDENT` | `flight_accident` | `bolt://localhost:15064` |
+| `MOVIE` | `movie` | `bolt://localhost:15066` |
+| `NBA` | `nba` | `bolt://localhost:15067` |
+
+Use `--target_db_dialect cypher`, `--structured_query_type cypher`, and `data/databases/CypherBench/{graph}/schema.json` as `--schema_description_path` (see Section 3).
+
+```bash
+# Stop the test graphs from the CypherBench root when finished.
+cd docker
+bash stop_neo4j_test.sh
+```
+<!-- HYUNJUN-REVIEW END: CypherBench Neo4j setup -->
 
 ## 2. TierCache Configuration
 
@@ -192,14 +272,16 @@ Here, NLQ denotes a natural language query, and SQ denotes a structured query. T
 
 ### Running TierCache on a simple NLQ sequence
 
+<!-- HYUNJUN-REVIEW START: 2026-10-03 | Corrected target_db_path to ./data/databases/... and schema_description_path to ./data/databases/.../schema.txt. -->
 ```bash
 CUDA_VISIBLE_DEVICES=0 python src/run_example.py \
 	--config_path "./configs/cache/example.json" \
-	--target_db_path "./databases/EHRSQL/eicu/db.sqlite" \
+	--target_db_path "./data/databases/EHRSQL/eicu/db.sqlite" \
 	--target_db_dialect "sqlite" \
- 	--schema_description_path "./databases/EHRSQL/eicu/schema.sqlite" \
+	--schema_description_path "./data/databases/EHRSQL/eicu/schema.txt" \
  	--structured_query_type "sql"
 ```
+<!-- HYUNJUN-REVIEW END: EHRSQL example path corrections -->
 
 - `config_path`: path to the configuration file.
 - `target_db_path`: path to the target database file or the database connection URL.
@@ -252,6 +334,13 @@ CUDA_VISIBLE_DEVICES=0 python src/run_example.py \
 
 ### Running TierCache on SQStream workloads
 
+<!-- HYUNJUN-REVIEW START: 2026-10-03 | Added SQStream download link; corrected execution examples. -->
+Download the workloads: [sqstream.tar.gz](https://drive.google.com/file/d/1iVhp_sgfdaV8eHEpT1kvqejXGjKdOTx1/view). Extract the archive from the repository root:
+
+```bash
+tar -zxvf sqstream.tar.gz
+```
+
 ```bash
 # EHRSQL
 CUDA_VISIBLE_DEVICES=0 python src/run_benchmark.py \
@@ -259,13 +348,13 @@ CUDA_VISIBLE_DEVICES=0 python src/run_benchmark.py \
 	--config_path "./configs/cache/SQStream-EHRSQL-EICU.json" \
 	--target_db_path "./data/databases/EHRSQL/eicu/db.sqlite" \
 	--target_db_dialect "sqlite" \
- 	--schema_description_path "./data/databases/EHRSQL/eicu/schema.txt" \
- 	--structured_query_type "sql"
+	--schema_description_path "./data/databases/EHRSQL/eicu/schema.txt" \
+	--structured_query_type "sql"
 
 # ScienceBenchmark
 CUDA_VISIBLE_DEVICES=0 python src/run_benchmark.py \
 	--workload_path "./data/SQStream/ScienceBenchmark-CORDIS.json" \
- 	--config_path "./configs/cache/SQStream-ScienceBenchmark-CORDIS.json" \
+	--config_path "./configs/cache/SQStream-ScienceBenchmark-CORDIS.json" \
 	--target_db_path "postgresql://test:test1234@localhost:5432/cordis" \
 	--target_db_dialect "postgres" \
 	--schema_description_path "./data/databases/ScienceBenchmark/cordis/schema.txt" \
@@ -274,21 +363,22 @@ CUDA_VISIBLE_DEVICES=0 python src/run_benchmark.py \
 # BIRD
 CUDA_VISIBLE_DEVICES=0 python src/run_benchmark.py \
 	--workload_path "./data/SQStream/BIRD-CODE.json" \
- 	--config_path "./configs/cache/SQStream-BIRD-CODE.json" \
+	--config_path "./configs/cache/SQStream-BIRD-CODE.json" \
 	--target_db_path "./data/databases/BIRD/codebase_community/db.sqlite" \
- 	--target_db_dialect "sqlite" \
- 	--schema_description_path "./data/databases/BIRD/codebase_community/schema.txt" \
- 	--structured_query_type "sql"
+	--target_db_dialect "sqlite" \
+	--schema_description_path "./data/databases/BIRD/codebase_community/schema.txt" \
+	--structured_query_type "sql"
 
 # CypherBench
 CUDA_VISIBLE_DEVICES=0 python src/run_benchmark.py \
 	--workload_path "./data/SQStream/CypherBench-MOVIE.json" \
- 	--config_path "./configs/cache/SQStream-CypherBench-MOVIE.json" \
-	--target_db_path "bolt://localhost:15064" \
- 	--target_db_dialect "cypher" \
- 	--schema_description_path "./data/databases/CypherBench/movie/schema.json" \
- 	--structured_query_type "cypher"
+	--config_path "./configs/cache/SQStream-CypherBench-MOVIE.json" \
+	--target_db_path "bolt://localhost:15066" \
+	--target_db_dialect "cypher" \
+	--schema_description_path "./data/databases/CypherBench/movie/schema.json" \
+	--structured_query_type "cypher"
 ```
+<!-- HYUNJUN-REVIEW END: SQStream execution example corrections -->
 
 Target database names for each SQStream workload:
 
@@ -307,12 +397,14 @@ Target database names for each SQStream workload:
 
 ## 4. Lightweight Model Training
 
-Download the train/dev datasets: [TBD](tbd). Then, extract the archive:
+<!-- HYUNJUN-REVIEW START: 2026-10-03 | Added Google Drive training dataset download link. -->
+Download the train/dev datasets: [datasets.tar.gz](https://drive.google.com/file/d/1SEsB6_IVMIYCQ1GD8iSmm5VLlOSwpuPv/view). Then, extract the archive:
 
 ```bash
 tar -zxvf datasets.tar.gz
 # The datasets will be extracted into the 'data' directory.
 ```
+<!-- HYUNJUN-REVIEW END: training dataset download link -->
 
 To adjust the training settings (e.g., `epochs`, `learning_rate`), edit the configuration files under `./configs/models`. The examples below specify the configuration file paths for each model.
 
@@ -338,53 +430,44 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python src/models/filler/train.py \
 	--config_path "./configs/models/filler/cypher/config1.json"
 ```
 
-## 5. SQStream
+## 5. SQStream (Optional)
 
-Optional: regenerate SQLStream workloads.
+<!-- HYUNJUN-REVIEW START: 2026-10-05 | Optional SQStream generation using BIRD/STUDENT as a single example. -->
+Use the released SQStream workloads for evaluation in Section 3. To regenerate a workload, follow the example below for **BIRD / STUDENT (`student_club`)**.
 
-Below is the minimal flow for one DB: **`BIRD` / `student_club`**.
+### 1) Prepare source data and configs
 
-### 1) Prepare configs (`BIRD` / `student_club` only)
+Prepare the databases in Section 1. Benchmark question/query files are included under `src/benchmark/data/source/`.
+
 ```bash
 cp src/benchmark/configs/benchmark_sources.example.yaml src/benchmark/configs/benchmark_sources.yaml
 cp src/benchmark/configs/db_config.example.yaml src/benchmark/configs/db_config.yaml
 ```
 
-Edit these files so they contain only the target DB entry:
-- `src/benchmark/configs/benchmark_sources.yaml`
-- `src/benchmark/configs/db_config.yaml`
-
-Path rule:
-- Relative paths are resolved from repository root.
-- Absolute paths are also supported.
+Keep only `BIRD` with `dbs: [student_club]` in `benchmark_sources.yaml` and the `student_club` entry in `db_config.yaml`. Set its DB path to `data/databases/BIRD/student_club/db.sqlite`. Relative paths resolve from the repository root.
 
 ### 2) Validate setup
+
 ```bash
-python src/benchmark/scripts/check_setup.py \
-  --sources-config src/benchmark/configs/benchmark_sources.yaml \
-  --db-config src/benchmark/configs/db_config.yaml
+python src/benchmark/scripts/check_setup.py --benchmark BIRD --check-connections
 ```
 
-### 3) Build structural pairs pool
+### 3) Build structural pairs pools
+
 ```bash
-python src/benchmark/scripts/build_structural_pairs.py \
-  --benchmark BIRD \
-  --bird-split Dev \
-  --sources-config src/benchmark/configs/benchmark_sources.yaml \
-  --pool-root data/benchmark/structural_pairs_pool
+python src/benchmark/scripts/build_structural_pairs.py --benchmark BIRD --split Dev
 ```
 
-### 4) Generate workload
+### 4) Generate workloads
+
 ```bash
 python src/benchmark/scripts/generate_workload.py \
   --benchmark_type BIRD \
   --split Dev \
-  --target_db student_club \
+  --target_db STUDENT \
   --distribution_type query_len \
-  --num_queries 1000 \
-  --pool-root data/benchmark/structural_pairs_pool \
-  --db_config_file src/benchmark/configs/db_config.yaml \
-  --output_file data/SQLStream/BIRD/student_club/zipf_query_len_1k.json
+  --num_queries 1000
 ```
 
-
+The output is saved to `data/SQStream/BIRD-STUDENT.json`. If the file already exists, select a new path with `--output_file`. See [the generation guide](src/benchmark/README.md) for other workloads.
+<!-- HYUNJUN-REVIEW END: optional BIRD/STUDENT SQStream generation -->

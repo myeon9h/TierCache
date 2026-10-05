@@ -1,0 +1,45 @@
+# Target DB names are original source asset names, not paper workload names.
+# SQLite locations match the public database archive and EHRSQL setup guide.
+eicu:
+  type: sqlite
+  path: data/databases/EHRSQL/eicu/db.sqlite
+mimic_iii:
+  type: sqlite
+  path: data/databases/EHRSQL/mimic_iii/db.sqlite
+student_club:
+  type: sqlite
+  path: data/databases/BIRD/student_club/db.sqlite
+codebase_community:
+  type: sqlite
+  path: data/databases/BIRD/codebase_community/db.sqlite
+cordis:
+  type: postgresql
+  url: postgresql://test:test1234@localhost:5432/cordis
+  schema: unics_cordis
+oncomx:
+  type: postgresql
+  url: postgresql://test:test1234@localhost:5432/oncomx
+  schema: oncomx_v1_0_25
+
+# Illustrative ports from the CypherStream source setup. Set each URI to the
+# actual CypherBench service used for both generation and TierCache evaluation.
+company:
+  type: neo4j
+  uri: bolt://localhost:15062
+  username: neo4j
+  password: cypherbench
+flight_accident:
+  type: neo4j
+  uri: bolt://localhost:15064
+  username: neo4j
+  password: cypherbench
+movie:
+  type: neo4j
+  uri: bolt://localhost:15066
+  username: neo4j
+  password: cypherbench
+nba:
+  type: neo4j
+  uri: bolt://localhost:15067
+  username: neo4j
+  password: cypherbench

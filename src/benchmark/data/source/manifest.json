@@ -1,0 +1,173 @@
+{
+  "description": "JSON research inputs copied byte-for-byte; database files and dumps excluded.",
+  "files": [
+    {
+      "file": "BIRD/codebase_community/dev.json",
+      "origin": "Colm-Official-Code/src/benchmark/data/source/BIRD/codebase_community/dev.json",
+      "bytes": 78763,
+      "sha256": "6155355a17bfeb4143a7db206087c6a4e5c0c7e8264f9d823309daff35dda401",
+      "records": 186
+    },
+    {
+      "file": "BIRD/codebase_community/tables.json",
+      "origin": "Colm-Official-Code/src/benchmark/data/source/BIRD/codebase_community/tables.json",
+      "bytes": 7751,
+      "sha256": "faf06313d6e7e5e4cfc3597bb8e5ea4c8fe6f4e1e0e2367ca315f34458058515",
+      "records": null
+    },
+    {
+      "file": "BIRD/student_club/dev.json",
+      "origin": "Colm-Official-Code/src/benchmark/data/source/BIRD/student_club/dev.json",
+      "bytes": 73323,
+      "sha256": "5017abb4b9147cd69557066edc02e4b62875dfe135558d0aa8dfb940e3a6fad2",
+      "records": 158
+    },
+    {
+      "file": "BIRD/student_club/tables.json",
+      "origin": "Colm-Official-Code/src/benchmark/data/source/BIRD/student_club/tables.json",
+      "bytes": 5270,
+      "sha256": "031476f48ba52cd83c3e62f9ff3fb7807e7abb99b3ed8164acf6bb1eeafe0f40",
+      "records": null
+    },
+    {
+      "file": "EHRSQL/eicu/tables.json",
+      "origin": "Colm-Official-Code/src/benchmark/data/source/EHRSQL/eicu/tables.json",
+      "bytes": 8051,
+      "sha256": "8386f0fdb0843ab3ac71d5829648a27c5ecadf78e48bca1b8ecf353656eff521",
+      "records": null
+    },
+    {
+      "file": "EHRSQL/eicu/test.json",
+      "origin": "Colm-Official-Code/src/benchmark/data/source/EHRSQL/eicu/test.json",
+      "bytes": 1695270,
+      "sha256": "b511d9294b8dac50840173ab18b3e42a5f03abef88c326b5a4393e75c9c7ed8f",
+      "records": 1792
+    },
+    {
+      "file": "EHRSQL/eicu/train.json",
+      "origin": "Colm-Official-Code/src/benchmark/data/source/EHRSQL/eicu/train.json",
+      "bytes": 12488168,
+      "sha256": "18514d7e091744911297fe5fad58d8c81eca52bf951e195c081b0764b851ce15",
+      "records": 9270
+    },
+    {
+      "file": "EHRSQL/eicu/valid.json",
+      "origin": "Colm-Official-Code/src/benchmark/data/source/EHRSQL/eicu/valid.json",
+      "bytes": 1084180,
+      "sha256": "e63ce19c6a55c7a97a010dabbd0297d30666e8631b36f6f0e1aa19ddd93c70a3",
+      "records": 1117
+    },
+    {
+      "file": "EHRSQL/mimic_iii/tables.json",
+      "origin": "Colm-Official-Code/src/benchmark/data/source/EHRSQL/mimic_iii/tables.json",
+      "bytes": 12219,
+      "sha256": "7ac97032ef4572eaf8bcb6a38809bcf7e861583d7d137b2f7ab163759e4fc853",
+      "records": null
+    },
+    {
+      "file": "EHRSQL/mimic_iii/test.json",
+      "origin": "Colm-Official-Code/src/benchmark/data/source/EHRSQL/mimic_iii/test.json",
+      "bytes": 1660147,
+      "sha256": "88d5fef7a7ec7808ca4d7db2c0bccc274c79f257c2edd3a60e3fb1cce80152f0",
+      "records": 1786
+    },
+    {
+      "file": "EHRSQL/mimic_iii/train.json",
+      "origin": "Colm-Official-Code/src/benchmark/data/source/EHRSQL/mimic_iii/train.json",
+      "bytes": 12247976,
+      "sha256": "23655f7273c812662567e58033c24294c898d9fb255987a72a8877abef86275a",
+      "records": 9318
+    },
+    {
+      "file": "EHRSQL/mimic_iii/valid.json",
+      "origin": "Colm-Official-Code/src/benchmark/data/source/EHRSQL/mimic_iii/valid.json",
+      "bytes": 1070476,
+      "sha256": "2f78f70155762fbb68372460b13e3b73a90d9180c6d928551339d956628befe2",
+      "records": 1122
+    },
+    {
+      "file": "ScienceBenchmark/cordis/dev.json",
+      "origin": "Colm-Official-Code/src/benchmark/data/source/ScienceBenchmark/cordis/dev.json",
+      "bytes": 2048890,
+      "sha256": "b277dd0c40671b91c56ed71df10248bd4de86619eb22f29f6190810dc4d1e375",
+      "records": 100
+    },
+    {
+      "file": "ScienceBenchmark/cordis/seed.json",
+      "origin": "Colm-Official-Code/src/benchmark/data/source/ScienceBenchmark/cordis/seed.json",
+      "bytes": 2322486,
+      "sha256": "6a7f9e80708465bce2cd7a594d818423f6f5bd67758f325da6beb6c0f5e281cf",
+      "records": 100
+    },
+    {
+      "file": "ScienceBenchmark/cordis/synth.json",
+      "origin": "Colm-Official-Code/src/benchmark/data/source/ScienceBenchmark/cordis/synth.json",
+      "bytes": 26261503,
+      "sha256": "9dcf1160fdc22a30b7be1b04781c0217282dbbe54868ba155d9fe431a3b34daa",
+      "records": 1306
+    },
+    {
+      "file": "ScienceBenchmark/cordis/tables.json",
+      "origin": "Colm-Official-Code/src/benchmark/data/source/ScienceBenchmark/cordis/tables.json",
+      "bytes": 12165,
+      "sha256": "06a948262affe89832fc1b5ebcb6d3452036efc17365d587c339fafec28125e6",
+      "records": 1
+    },
+    {
+      "file": "ScienceBenchmark/oncomx/dev.json",
+      "origin": "Colm-Official-Code/src/benchmark/data/source/ScienceBenchmark/oncomx/dev.json",
+      "bytes": 2635760,
+      "sha256": "ae41ced1013b71e9280504cc340ee68d2af71bfad28b74a2d3d66789e41abfc9",
+      "records": 99
+    },
+    {
+      "file": "ScienceBenchmark/oncomx/seed.json",
+      "origin": "Colm-Official-Code/src/benchmark/data/source/ScienceBenchmark/oncomx/seed.json",
+      "bytes": 2597222,
+      "sha256": "f255453bfb5859b31bc1b869b6d787bb00b715467e74d826a50fd2a1dc40cd62",
+      "records": 100
+    },
+    {
+      "file": "ScienceBenchmark/oncomx/synth.json",
+      "origin": "Colm-Official-Code/src/benchmark/data/source/ScienceBenchmark/oncomx/synth.json",
+      "bytes": 27376071,
+      "sha256": "b0085abd180db6aa48c34dfbd3f2de69be9fd84dbd504a691ada6d31e3ec2ee1",
+      "records": 1065
+    },
+    {
+      "file": "ScienceBenchmark/oncomx/tables.json",
+      "origin": "Colm-Official-Code/src/benchmark/data/source/ScienceBenchmark/oncomx/tables.json",
+      "bytes": 16793,
+      "sha256": "60f2f260dad1d7819a43cfc9e85198e3643025ccf087b61712b74d07b78bda1f",
+      "records": 1
+    },
+    {
+      "file": "CypherBench/preprocessed/test.json",
+      "origin": "CypherStream/cypherstream/data/source/CypherBench/preprocessed/test.json",
+      "bytes": 5235628,
+      "sha256": "237900f4d18871ecf027e176ac4809c83690a08bdde736e6847760f0e7dadd2d",
+      "records": 2348
+    },
+    {
+      "file": "CypherBench/preprocessed/train.json",
+      "origin": "CypherStream/cypherstream/data/source/CypherBench/preprocessed/train.json",
+      "bytes": 19365335,
+      "sha256": "a1f77dd7905ecac086d499eb31cb5f2adc4cff680fc12741246d9e3f8148443f",
+      "records": 8534
+    },
+    {
+      "file": "CypherBench/raw/test.json",
+      "origin": "CypherStream/cypherstream/data/source/CypherBench/raw/test.json",
+      "bytes": 1585902,
+      "sha256": "a21dda02961a03f146025f4514733b56c85aa09899fbedc182ec2071f4729179",
+      "records": 2348
+    },
+    {
+      "file": "CypherBench/raw/train.json",
+      "origin": "CypherStream/cypherstream/data/source/CypherBench/raw/train.json",
+      "bytes": 5695711,
+      "sha256": "cc28109868fbc6e20bbcd671747ebb342320483287368859cb1a12eafc6b81c0",
+      "records": 8534
+    }
+  ]
+}
